@@ -1,15 +1,7 @@
 #!/usr/bin/env bash
 # This script displays the content of the file /etc/passwd in a story format
 
-while read -r line; do
-  IFS=: read -ra fields <<< "$line"
-  username=${fields[0]}
-  password=${fields[1]}
-  user_id=${fields[2]}
-  group_id=${fields[3]}
-  user_id_info=${fields[4]}
-  home_dir=${fields[5]}
-  command_shell=${fields[6]}
-  echo "The user $username is part of the $group_id gang, lives in $home_dir and rides $command_shell. $user_id's place is protected by the passcode $password, more info about the user here: $user_id_info"
-  echo
-done < /etc/passwd 
+while IFS=: read -r username password user_id group_id user_id_info home_directory command_shell
+do
+    echo "The user $username is part of the $group_id gang, lives in $home_directory and rides $command_shell. $user_id's place is protected by the passcode $password, more info about the user here: $user_id_info"
+done < /etc/passwd
