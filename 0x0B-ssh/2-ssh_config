@@ -1,0 +1,54 @@
+OpenSSH_for_Windows_8.6p1, LibreSSL 3.4.3
+debug1: Reading configuration data C:\\Users\\PC/.ssh/config
+debug1: C:\\Users\\PC/.ssh/config line 1: Applying options for 107.23.90.193
+debug1: Authenticator provider $SSH_SK_PROVIDER did not resolve; disabling
+debug1: Connecting to 107.23.90.193 [107.23.90.193] port 22.
+debug1: Connection established.
+debug1: identity file C:\\Users\\PC/.ssh/school type -1
+debug1: identity file C:\\Users\\PC/.ssh/school-cert type -1
+debug1: Local version string SSH-2.0-OpenSSH_for_Windows_8.6
+debug1: Remote protocol version 2.0, remote software version OpenSSH_8.2p1 Ubuntu-4ubuntu0.5
+debug1: compat_banner: match: OpenSSH_8.2p1 Ubuntu-4ubuntu0.5 pat OpenSSH* compat 0x04000000
+debug1: Authenticating to 107.23.90.193:22 as 'ubuntu'
+debug1: load_hostkeys: fopen C:\\Users\\PC/.ssh/known_hosts: No such file or directory
+debug1: load_hostkeys: fopen C:\\Users\\PC/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen __PROGRAMDATA__\\ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen __PROGRAMDATA__\\ssh/ssh_known_hosts2: No such file or directory
+debug1: SSH2_MSG_KEXINIT sent
+debug1: SSH2_MSG_KEXINIT received
+debug1: kex: algorithm: curve25519-sha256
+debug1: kex: host key algorithm: ssh-ed25519
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug1: SSH2_MSG_KEX_ECDH_REPLY received
+debug1: Server host key: ssh-ed25519 SHA256:MRFYW0oz6hRinRzS4tT3yyhrBdaB0OObMKVYzGLfHao
+debug1: load_hostkeys: fopen C:\\Users\\PC/.ssh/known_hosts: No such file or directory
+debug1: load_hostkeys: fopen C:\\Users\\PC/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen __PROGRAMDATA__\\ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen __PROGRAMDATA__\\ssh/ssh_known_hosts2: No such file or directory
+debug1: hostkeys_find_by_key_hostfile: hostkeys file C:\\Users\\PC/.ssh/known_hosts does not exist
+debug1: hostkeys_find_by_key_hostfile: hostkeys file C:\\Users\\PC/.ssh/known_hosts2 does not exist
+debug1: hostkeys_find_by_key_hostfile: hostkeys file __PROGRAMDATA__\\ssh/ssh_known_hosts does not exist
+debug1: hostkeys_find_by_key_hostfile: hostkeys file __PROGRAMDATA__\\ssh/ssh_known_hosts2 does not exist
+The authenticity of host '107.23.90.193 (107.23.90.193)' can't be established.
+ED25519 key fingerprint is SHA256:MRFYW0oz6hRinRzS4tT3yyhrBdaB0OObMKVYzGLfHao.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '107.23.90.193' (ED25519) to the list of known hosts.
+debug1: rekey out after 134217728 blocks
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: expecting SSH2_MSG_NEWKEYS
+debug1: SSH2_MSG_NEWKEYS received
+debug1: rekey in after 134217728 blocks
+debug1: pubkey_prepare: ssh_get_authentication_socket: No such file or directory
+debug1: Will attempt key: C:\\Users\\PC/.ssh/school  explicit
+debug1: SSH2_MSG_EXT_INFO received
+debug1: kex_input_ext_info: server-sig-algs=<ssh-ed25519,sk-ssh-ed25519@openssh.com,ssh-rsa,rsa-sha2-256,rsa-sha2-512,ssh-dss,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ecdsa-sha2-nistp256@openssh.com>
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug1: Authentications that can continue: publickey
+debug1: Next authentication method: publickey
+debug1: Trying private key: C:\\Users\\PC/.ssh/school
+no such identity: C:\\Users\\PC/.ssh/school: No such file or directory
+debug1: No more authentication methods to try.
+ubuntu@107.23.90.193: Permission denied (publickey).
