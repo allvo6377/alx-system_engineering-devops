@@ -1,0 +1,18 @@
+Install certbot on your server using the command sudo apt-get install certbot.
+Generate a certificate for your subdomain using the command sudo certbot certonly --standalone -d www.<your_domain>. You will need to provide some information and agree to the terms of service. This will create a directory /etc/letsencrypt/live/www.<your_domain> with four files: cert.pem, chain.pem, fullchain.pem and privkey.pem.
+Install HAproxy on your server using the command sudo apt-get install haproxy.
+Edit the file /etc/haproxy/haproxy.cfg and add the following lines at the end of the global section
+# Enable SSL
+ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
+ssl-default-bind-options no-sslv3
+# Redirect HTTP traffic to HTTPS
+redirect scheme https code 301 if !{ ssl_fc }
+frontend www-https
+    bind *:443 ssl crt /etc/letsencrypt/live/www.<your_domain>/fullchain.pem
+    reqadd X-Forwarded-Proto:\ https
+    default_backend www-backend
+
+backend www-backend
+    balance roundrobin
+    server web1 <your_web_server_ip>:80 check
+
