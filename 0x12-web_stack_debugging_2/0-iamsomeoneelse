@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
-# Runs the whoami command under the user passed as argument.
-sudo -u "$1" whoami
+# This script takes one argument as the user name and runs the whoami command under that user
+if [ $# -eq 1 ]; then # Check if there is exactly one argument
+  sudo -u $1 whoami # Run the whoami command with sudo and the user name as an argument
+else
+  echo "Usage: $0 user_name" # Print a usage message if there is no argument or more than one argument
+fi
