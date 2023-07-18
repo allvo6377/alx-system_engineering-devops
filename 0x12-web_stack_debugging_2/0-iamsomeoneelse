@@ -2,3 +2,4 @@
 #run a command as a specific user
 
 sudo -u "$1" whoami
+
