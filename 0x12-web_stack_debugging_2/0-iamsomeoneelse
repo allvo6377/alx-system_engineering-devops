@@ -1,5 +1,10 @@
-#!/usr/bin/env bash
-#run a command as a specific user
+#!/bin/bash
+# This script runs the whoami command under the user passed as an argument
 
-sudo -u "$1" whoami
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 username"
+    exit 1
+fi
 
+username="$1"
+su -c "whoami" "$username"
