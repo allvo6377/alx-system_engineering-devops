@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-# This script takes one argument as the user name and runs the whoami command under that user
+# This script takes one argument as the username and runs the 'whoami' command under that user.
+
 if [ $# -eq 1 ]; then
-  sudo -u $1 whoami
+  username="$1"
+  sudo -u "$username" whoami
 else
-  echo "Usage: $0 user_name"
+  echo "Usage: $0 <username>"
 fi
+
