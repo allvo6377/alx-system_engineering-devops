@@ -1,61 +1,88 @@
 #!/usr/bin/python3
-""" Count it! """
-from requests import get
-
-REDDIT = "https://www.reddit.com/"
-HEADERS = {'user-agent': 'my-app/0.0.1'}
+"""A module containing functions for working with the Reddit API.
+"""
+import requests
 
 
-def count_words(subreddit, word_list, after="", word_dic={}):
-    """
-    Returns a list containing the titles of all hot articles for a
-    given subreddit. If no results are found for the given subreddit,
-    the function should return None.
-    """
-    if not word_dic:
-        for word in word_list:
-            word_dic[word] = 0
+def hist_sort(hist={}):
+    '''Sorts and prints the given histogram.
+    '''
+    hist = list(filter(lambda tup: tup[1], hist))
+    hist_dict = {}
+    for item in hist:
+        if item[0] in hist_dict:
+            hist_dict[item[0]] += item[1]
+        else:
+            hist_dict[item[0]] = item[1]
+    hist = list(hist_dict.items())
+    hist.sort(
+        key=lambda tup: tup[0],
+        reverse=False
+    )
+    hist.sort(
+        key=lambda tup: tup[1],
+        reverse=True
+    )
+    printable_str = '\n'.join(list(map(
+        lambda tup: '{}: {}'.format(tup[0], tup[1]),
+        hist
+    )))
+    if printable_str:
+        print(printable_str)
 
-    if after is None:
-        word_list = [[key, value] for key, value in word_dic.items()]
-        word_list = sorted(word_list, key=lambda x: (-x[1], x[0]))
-        for w in word_list:
-            if w[1]:
-                print("{}: {}".format(w[0].lower(), w[1]))
-        return None
 
-    url = REDDIT + "r/{}/hot/.json".format(subreddit)
-
-    params = {
-        'limit': 100,
-        'after': after
+def count_words(subreddit, word_list, hist=[], count=0, after=''):
+    '''
+    Counts the number of times each word in a given wordlist
+    occurs in a given subreddit.
+    '''
+    headers = {
+        'Accept': 'application/json',
+        'User-Agent': ' '.join([
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+            'AppleWebKit/537.36 (KHTML, like Gecko)',
+            'Chrome/97.0.4692.71',
+            'Safari/537.36',
+            'Edg/97.0.1072.62'
+        ])
     }
-
-    r = get(url, headers=HEADERS, params=params, allow_redirects=False)
-
-    if r.status_code != 200:
-        return None
-
-    try:
-        js = r.json()
-
-    except ValueError:
-        return None
-
-    try:
-
-        data = js.get("data")
-        after = data.get("after")
-        children = data.get("children")
-        for child in children:
-            post = child.get("data")
-            title = post.get("title")
-            lower = [s.lower() for s in title.split(' ')]
-
-            for w in word_list:
-                word_dic[w] += lower.count(w.lower())
-
-    except:
-        return None
-
-    count_words(subreddit, word_list, after, word_dic)
+    sort = 'hot'
+    limit = 30
+    result = requests.get(
+        '{}/r/{}/.json?sort={}&limit={}&count={}&after={}'.format(
+            'https://www.reddit.com',
+            subreddit,
+            sort,
+            limit,
+            count,
+            after
+        ),
+        headers=headers,
+        allow_redirects=False
+    )
+    if not hist:
+        word_list = list(map(lambda word: word.lower(), word_list))
+        hist = list(map(lambda word: (word, 0), word_list))
+    if result.status_code == 200:
+        data = result.json()['data']
+        posts = data['children']
+        titles = list(map(lambda post: post['data']['title'], posts))
+        hist = list(map(
+            lambda tup: (tup[0], tup[1] + sum(list(map(
+                lambda txt: txt.lower().split().count(tup[0]),
+                titles
+            )))),
+            hist
+        ))
+        if len(posts) >= limit and data['after']:
+            count_words(
+                subreddit,
+                word_list,
+                hist,
+                count + len(posts),
+                data['after']
+            )
+        else:
+            hist_sort(hist)
+    else:
+        return
